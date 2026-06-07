@@ -22,11 +22,10 @@ tres cajeros bastan para la demanda o se requieren más.
 
 | Archivo | Descripción |
 |---------|-------------|
-| `simulacion_parqueadero.py` | Simulador SimPy: corre las réplicas, detecta el estado estable (Welch), elimina el transitorio y genera las figuras y `resumen.json`. |
-| `gen_docx.py` | Genera el documento Word con las 4 secciones (introducción, metodología, resultados, conclusiones). |
-| `resumen.json` | Estadísticas numéricas de la corrida (entrada de los generadores de documentos). |
-| `fig1..fig6_*.png` | Figuras Matplotlib del análisis. |
-| `simulacion_30_problemaParqueadero.docx` | Documento entregable. |
+| `simulacion_parqueadero.py` | Simulador SimPy: corre las réplicas, detecta el estado estable (Welch), elimina el transitorio y genera las figuras (`image/`) y `resumen.json`. |
+| `resumen.json` | Estadísticas numéricas de la corrida. |
+| `image/fig1..fig6_*.png` | Figuras Matplotlib del análisis. |
+| `docs/` | Documento entregable (Word y PDF). |
 
 ## Metodología estadística
 
@@ -52,12 +51,11 @@ tres cajeros bastan para la demanda o se requieren más.
 
 ## Cómo ejecutar
 
-Requisitos: Python 3.12, `numpy`, `simpy`, `matplotlib`, `python-docx`.
+Requisitos: Python 3.12, `numpy`, `simpy`, `matplotlib`.
 
 ```bash
-pip install numpy simpy matplotlib python-docx
-python simulacion_parqueadero.py   # corre la simulación y genera figuras + resumen.json
-python gen_docx.py                 # genera el documento Word
+pip install numpy simpy matplotlib
+python simulacion_parqueadero.py   # corre la simulación y genera las figuras en image/ + resumen.json
 ```
 
 ## Autor

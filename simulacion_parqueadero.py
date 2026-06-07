@@ -11,11 +11,14 @@ Tipos de usuario:
     Lento             4 min                5 min        30
     Muy lento         6 min                7 min        25
 """
+import os
 import numpy as np
 import simpy
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
+
+IMG_DIR = "image"   # carpeta de salida de las figuras
 
 # ----------------------------------------------------------------------------
 # Parametros del modelo
@@ -148,6 +151,7 @@ def estadisticas(replicas, warmup):
 # MAIN
 # ----------------------------------------------------------------------------
 def main():
+    os.makedirs(IMG_DIR, exist_ok=True)
     print("Corriendo", N_REPLICAS, "replicas...")
     replicas = [run_replica(seed=1000 + k) for k in range(N_REPLICAS)]
     print("Clientes promedio por replica:", np.mean([len(r) for r in replicas]))
@@ -175,7 +179,7 @@ def main():
     ax.set_ylabel("W = tiempo en sistema (min)")
     ax.set_title("Fig 1. Deteccion del estado estable - tecnica de la media (Welch)")
     ax.legend(); ax.grid(alpha=0.3)
-    fig.tight_layout(); fig.savefig("fig1_estado_estable.png", dpi=120); plt.close(fig)
+    fig.tight_layout(); fig.savefig(os.path.join(IMG_DIR, "fig1_estado_estable.png"), dpi=120); plt.close(fig)
 
     # Fig 2: numero de replicas (media acumulada + IC)
     fig, ax = plt.subplots(figsize=(9, 5))
@@ -186,7 +190,7 @@ def main():
     ax.set_ylabel("W promedio (min)")
     ax.set_title("Fig 2. Estabilizacion del promedio segun numero de replicas")
     ax.legend(); ax.grid(alpha=0.3)
-    fig.tight_layout(); fig.savefig("fig2_num_replicas.png", dpi=120); plt.close(fig)
+    fig.tight_layout(); fig.savefig(os.path.join(IMG_DIR, "fig2_num_replicas.png"), dpi=120); plt.close(fig)
 
     # Fig 3: tiempo promedio de atencion por cajero (min/max)
     fig, ax = plt.subplots(figsize=(8, 5))
@@ -201,7 +205,7 @@ def main():
     ax.set_ylabel("Tiempo promedio de atencion (min)")
     ax.set_title("Fig 3. Tiempo promedio de atencion por cajero\n(verde=menor, rojo=mayor)")
     ax.grid(alpha=0.3, axis="y")
-    fig.tight_layout(); fig.savefig("fig3_atencion_cajero.png", dpi=120); plt.close(fig)
+    fig.tight_layout(); fig.savefig(os.path.join(IMG_DIR, "fig3_atencion_cajero.png"), dpi=120); plt.close(fig)
 
     # Fig 4: promedio de usuarios por tipo (total y por cajero)
     fig, ax = plt.subplots(figsize=(9, 5))
@@ -213,7 +217,7 @@ def main():
     ax.set_ylabel("Usuarios promedio por replica")
     ax.set_title("Fig 4. Promedio de usuarios por tipo en cada cajero")
     ax.legend(); ax.grid(alpha=0.3, axis="y")
-    fig.tight_layout(); fig.savefig("fig4_usuarios_tipo.png", dpi=120); plt.close(fig)
+    fig.tight_layout(); fig.savefig(os.path.join(IMG_DIR, "fig4_usuarios_tipo.png"), dpi=120); plt.close(fig)
 
     # Fig 5: verificacion / calibracion (sim vs teorico)
     fig, axes = plt.subplots(1, 2, figsize=(12, 5))
@@ -230,7 +234,7 @@ def main():
     axes[1].set_title("Calibracion: tiempo medio de servicio por tipo")
     axes[1].set_ylabel("Minutos"); axes[1].legend(); axes[1].grid(alpha=0.3, axis="y")
     fig.suptitle("Fig 5. Verificacion y calibracion del modelo")
-    fig.tight_layout(); fig.savefig("fig5_verificacion.png", dpi=120); plt.close(fig)
+    fig.tight_layout(); fig.savefig(os.path.join(IMG_DIR, "fig5_verificacion.png"), dpi=120); plt.close(fig)
 
     # Fig 6: antes vs despues de eliminar transitorio
     fig, ax = plt.subplots(figsize=(9, 5))
@@ -242,7 +246,7 @@ def main():
     ax.set_ylabel("W promedio en sistema (min)")
     ax.set_title("Fig 6. Tiempo en sistema por cajero: antes vs despues de eliminar transitorio")
     ax.legend(); ax.grid(alpha=0.3, axis="y")
-    fig.tight_layout(); fig.savefig("fig6_antes_despues.png", dpi=120); plt.close(fig)
+    fig.tight_layout(); fig.savefig(os.path.join(IMG_DIR, "fig6_antes_despues.png"), dpi=120); plt.close(fig)
 
     # ---- guardar resumen numerico ----
     import json
