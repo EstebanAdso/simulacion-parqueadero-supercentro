@@ -60,4 +60,4 @@ python simulacion_parqueadero.py   # corre la simulación y genera las figuras e
 
 ## Autor
 
-Grupo de Simulación — Evidencia 4.
+Grupo de Simulación-30 — Evidencia 4.
